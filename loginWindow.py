@@ -18,7 +18,7 @@ def loginScreen():
     window.configure(background=bgcolor)
     window.minsize(800, 450)
     window.maxsize(800, 450)
-    window.title("BDS-library")
+    window.title("BDS-library-LOGIN")
     window.iconbitmap("./icons/vuticon.ico")
 
     pic = PIL.Image.open("./images/pepememe.png").resize(

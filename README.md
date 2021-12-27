@@ -1,3 +1,2 @@
 # BDS-library
-bpc-bds-project-assigment-3
-Init
+# 	bpc-bds-project-assigment-3

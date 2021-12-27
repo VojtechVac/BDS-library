@@ -7,9 +7,9 @@ import psycopg2
 class dbOp:
     # Validace přihlašovacích údajů
     def dbValidation(self, username, password):
-        self.username = str(username)
-        self.password = str(password)
-        self.hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+        self.username = username    
+        self.password = password
+        self.hashedPassword = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
         # Konfigurační hodnoty pro připojení k databázi
         DB_HOST = "localhost"
@@ -27,29 +27,16 @@ class dbOp:
         ) 
         
         cursor = connection.cursor()
-        # cursor.execute("SELECT hashed_password FROM Public.user WHERE nick= %s ORDER BY user_id ASC", [self.username])
-        # cursor.execute("SELECT password FROM Public.user WHERE nick=:username", {'username': self.username})
-        cursor.execute("SELECT hashed_password FROM Public.user WHERE nick= 'Kibi'") #, (self.username)
+        cursor.execute("SELECT hashed_password FROM Public.user WHERE nick= %s", [self.username])
         hashed = cursor.fetchall()
-        if hashed == None:
-            print("nenašel nic")
-        else:
-            print(hashed)
-
-
-        # result = hashed[0][4]
-        # print(result)
-        # Testování - troubleshooting protože bcrypt je strašně dementní věc
-        # print("---")
-        # print(type(hashed))
-        # print(hashed)
-        # print("---")
+        result = str(hashed[0][0])
+              
         cursor.close()
         connection.close()
 
-        # if bcrypt.checkpw(self.password.encode(), result.encode()):
-        #     return True
-        # else:
-        #     return False
+        if bcrypt.checkpw(self.password.encode(), result.encode()):
+            return True
+        else:
+            return False
 
             

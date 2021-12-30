@@ -1,10 +1,12 @@
 # Import modulu pro Login
 from login import login
+
 # Import modulu pro zobrazení databáze (Pouze pro testování)
-from treeview import viewDatabase
+# from treeview import viewDatabase
 
 # Voláme funkci loginScreen() ze třídy login (login.py), která program "zapne".
 login.loginScreen()
+
 # # Volání funkce viewScreen() ze třídy viewDatabase (treeview.py), užívá se pouze pro testování (přeskočení loginu)
 # viewDatabase.viewScreen()
 

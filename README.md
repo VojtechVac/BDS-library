@@ -3,13 +3,13 @@
 ## Autor:   Vojtěch Vaculík
 ## Předmět: BDS - Bezpečnost Databázových Systémů
 ## Ročník : BPC-IBE 2
-
+------------------------------------
 1. Download and setup PostgreSQL 
 [https://www.enterprisedb.com/downloads/postgres-postgresql-downloads]
    and pgAdmin
 [https://www.pgadmin.org/download/]
 
-------------------------------------
+# ------------------------------------
 2. Add pgAdmin to *Paths*
 
 File -> Preferences -> Binary paths -> Add pgAdmin paths

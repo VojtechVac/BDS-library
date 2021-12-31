@@ -11,8 +11,6 @@ from dbOperations import dbOp
 from treeview import viewDatabase
 
 class login:
-
-
     def loginScreen():
     # Custom colors
         bgcolor = "#333"
@@ -23,15 +21,13 @@ class login:
             self.window = window
             (self.window).destroy()
 
-        #-> Zobrazí error zprávu, zamezuje zobrazování více zpráv po dalším zmáčknutí tlačitka
+        #-> Zobrazí error zprávu
         def invalidLogin(self, invalidLabel):
             self.invalidLabel = invalidLabel
             wError = tk.Toplevel(wLogin)
             wError.configure(background=bgcolor)
-            wError.minsize(300, 200)
             wError.maxsize(300, 200)
             wError.title("Login Error")
-            wError.iconbitmap("./icons/vuticon.ico")
 
             message = ttk.Label(wError, text = "Username / Password is wrong !", foreground="#ff5733", background=bgcolor, font=("Arial", 14))
             message.pack(pady=40, anchor=N)
@@ -43,6 +39,10 @@ class login:
                 return False
             else:
                 # Zobrazí error zprávu
+                message = ttk.Label(wError, text = "Username / Password is wrong !", foreground="#ff5733", background=bgcolor, font=("Arial", 14))
+                message.pack(pady=40, anchor=N)
+                exitButton = ttk.Button(wError, text="Okay!", width=25,command=lambda: closeWindow(login,wError))
+                exitButton.pack(anchor=CENTER)
                 invalidLabel.pack(pady=10)
                
         def getUsername():
@@ -65,7 +65,6 @@ class login:
             if (dbOp.dbValidation(dbOp, self.username, self.password)):
                 closeWindow(login, window)
                 viewDatabase.viewScreen(viewDatabase,self.username)
-                # username, password
             else:
                 invalidLogin(login,invalidLabel)
 

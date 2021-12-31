@@ -74,6 +74,7 @@ class login:
     # Nastavení theme
         wLogin.tk.call('source', './Forest-ttk-theme/forest-dark.tcl')
         ttk.Style().theme_use('forest-dark')
+
     # Window config
         wLogin.configure(background=bgcolor)
         wLogin.minsize(700, 450)

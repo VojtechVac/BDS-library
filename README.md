@@ -21,7 +21,8 @@ Set:
 - Password: postgres
 
 Create a database named library and restore it from the file named 'library'
-------------------------------------
+
+# ------------------------------------
 3. Install used python libs.
 **psycopg2** 
 => pip install -U psycopg2
@@ -32,7 +33,7 @@ Create a database named library and restore it from the file named 'library'
 **pillow**
 => pip install -U pillow
 
-------------------------------------
+# ------------------------------------
 4. Start the application and Log in
 
 You can choose from 3 different types.
@@ -47,7 +48,8 @@ Customer  - Username: Brunchie
             Password: password
 
 Each one of them have different tools at their disposal.
-------------------------------------
+
+# ------------------------------------
 5. Back-up script
 
 - Location of PostgreSQL folders must be set in *Path*
@@ -63,7 +65,7 @@ Script contents
 => pg_dump -h "localhost" -U "postgres" -f "C:\Windows\Temp\library" "librarydb"
 => ```
 
-------------------------------------
+# ------------------------------------
 6. Licenses can be found either in [Licence] or [licenses_generated.html]
 
 ------------------------------------

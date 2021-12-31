@@ -11,14 +11,14 @@ from viewOperations import viewOp
 from help import Help
 
 class viewDatabase:
-    # username, password
-
-
-
     def viewScreen(self, nick):
         def openHelp():
             helpWindow = Help()
             helpWindow.displayHelp(wView)
+
+        def openStatements():
+            helpWindow = Help()
+            helpWindow.importanceOfPS(wView)
 
         self.nick = nick
         self.role = dbOp.getRole(dbOp,self.nick)
@@ -35,6 +35,7 @@ class viewDatabase:
         helpMenu = Menu(menu)
         menu.add_cascade(label="Help", menu=helpMenu)
         helpMenu.add_command(label="Help", command=openHelp, background="white", foreground="black")
+        helpMenu.add_command(label="PreparedStatements", command= openStatements, background="white", foreground="black")
 
         # Custom colors
         bgcolor = "#333"
@@ -117,6 +118,3 @@ class viewDatabase:
         wView.mainloop()
 
 
-
-## Custom buttons
-            #addButton  

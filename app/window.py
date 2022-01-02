@@ -1,6 +1,6 @@
 class Window():
   
-  # Function to center the window by calculating the height and width of users monitor
+  # Funkce vypočte střed obrazovky podle výšky/šířky monitoru
   def centerWindow(self, window, app_width, app_height):
 
     screen_width = window.winfo_screenwidth()

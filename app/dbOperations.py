@@ -59,14 +59,15 @@ class dbOp:
             port        =DB_PORT
         ) 
         cursor = connection.cursor()
-        cursor.execute("SELECT r.role_type FROM public.user u RIGHT JOIN public.role r ON u.user_id = r.role_id WHERE u.nick= %s", [self.nick])
+        cursor.execute("""SELECT r.role_type FROM public.user u 
+        RIGHT JOIN public.role r ON u.user_id = r.role_id WHERE u.nick= %s""", [self.nick])
         role = cursor.fetchall()
         
         cursor.close()
         connection.close()
 
         return role[0][0]
-
+    # Funkce vrátí pouze daného uživatele (používá se pouze u role customer)
     def getCustomer(self, dataTree, nick):
         self.nick = nick
 
@@ -86,17 +87,18 @@ class dbOp:
             JOIN public.transactions t ON u.user_id = t.user_id
             WHERE u.nick = %s
             """, [self.nick])
-        #Vrací tuple s informacema, index 0 - 7
+            
+        #Vraci tuple s informacema, index 0 - 7
         customer = cursor.fetchall()
         customerRecord = customer[0]
 
         cursor.close()
         connection.close()
 
-
+        #Načtení uživatele do treeview
         dataTree.insert(parent='', index='end', iid=0, text='', values=(customerRecord[0], customerRecord[1]+" "+ customerRecord[2],  customerRecord[3], customerRecord[4], customerRecord[5], customerRecord[6], customerRecord[7]))
-        
-        
+
+    # Funkce načte všechny uživatele z databáze 
     def getAll(self,tree):
         connection = psycopg2.connect(
             user        =DB_USER,
@@ -119,7 +121,7 @@ class dbOp:
         
         global count
         count = 0
-          # For loop to differentiate odd rows and even rows based on tags 'oddrow' and 'evenrow'
+          # Cyklus který přidává uživatele do treeview a rozlišuje je na liché a sudé
         for record in records:
             if count % 2 == 0:
               tree.insert(parent='', index='end', iid=count, text='', values=(record[0], record[1]+" "+record[2], record[3], record[4], record[5], record[6], record[7]), tags=('evenrow',))
@@ -130,11 +132,11 @@ class dbOp:
         cursor.close()
         connection.close()
     
-
+    # Vymaže všechny osoby v treeview
     def clearTree(tree):
         for item in tree.get_children():
             tree.delete(item)
-
+    # Funkce vyfiltruje osobu podle zadaného příjmení
     def filterName(self, last_name, tree):
         self.last_name = last_name
 
@@ -163,14 +165,14 @@ class dbOp:
         records = cursor.fetchall()
         global count
         count = 0
-          # For loop to differentiate odd rows and even rows based on tags 'oddrow' and 'evenrow'
+          # Cyklus který přidává uživatele do treeview a rozlišuje je na liché a sudé
         for record in records:
             if count % 2 == 0:
               tree.insert(parent='', index='end', iid=count, text='', values=(record[0], record[1]+" "+record[2], record[3], record[4], record[5], record[6], record[7]), tags=('evenrow',))
             else:
               tree.insert(parent='', index='end', iid=count, text='', values=(record[0], record[1]+" "+record[2], record[3], record[4], record[5], record[6], record[7]), tags=('oddrow',)) 
             count += 1
-
+    # Vrátí poslední ID v databázi + 1 (používá se při přidávání osob)
     def getNextID():
         connection = psycopg2.connect(
             user        =DB_USER,
@@ -188,7 +190,7 @@ class dbOp:
         nextID = cursor.fetchone()
         nextID = int(nextID[0])
         return nextID + 1
-
+    # Funkce přidá dalšího uživatele podle dat zadaných do entry polí
     def addRecord(ID, fName, lName, nick, mail, phone, role):
 
         if role == "admin":
@@ -214,7 +216,7 @@ class dbOp:
 
         cursor.close()
         connection.close()
-
+    # Funkce vymaže uživatele z treeview a z databáze (select levým klikem -> tlačítko remove) 
     def removingRecord(ID): 
         connection = psycopg2.connect(
             user        =DB_USER,
@@ -237,7 +239,7 @@ class dbOp:
         connection.commit()
         cursor.close()
         connection.close()
-
+    # Vrátí požadovanou osobu dle selectu levým kliknutím (Mělo být použito pro naplnění entry polí (EDIT))
     def getRecord(ID):
         connection = psycopg2.connect(
             user        =DB_USER,
@@ -263,7 +265,7 @@ class dbOp:
         return record
         
         
-
+    # Funkce určená k aktualizaci dat o uživateli v databázi (Edit)
     def updateRecord(ID):
 
         connection = psycopg2.connect(
@@ -281,6 +283,10 @@ class dbOp:
                             JOIN public.role r ON u.user_id = r.role_id
                             WHERE u.user_id = %s """, [ID,])
         record = cursor.fetchall()
+
+        ## Testovací kód 
+
+
         # print(record[0])
 
         # if role == "admin":
@@ -290,9 +296,10 @@ class dbOp:
         # elif role == "customer":
         #   role = 5
 
-        # cursor.execute("""UPDATE public.user_has_role SET role_id= %s WHERE user_id= %s""", (role, ID))
-        # cursor.execute("""UPDATE public.contact SET mail = %s, phone = %s WHERE user_id = %s""", (mail, phone, ID,))
-        # cursor.execute("""UPDATE public.user SET first_name = %s, last_name = %s, nick = %s WHERE user_id = %s""", (fName, lName, nick, ID,))
+        ## Queries provedou update osoby
+        #  cursor.execute("""UPDATE public.user_has_role SET role_id= %s WHERE user_id= %s""", (role, ID))
+        #  cursor.execute("""UPDATE public.contact SET mail = %s, phone = %s WHERE user_id = %s""", (mail, phone, ID,))
+        #  cursor.execute("""UPDATE public.user SET first_name = %s, last_name = %s, nick = %s WHERE user_id = %s""", (fName, lName, nick, ID,))
         # connection.commit()
         # cursor.close()
         # connection.close()

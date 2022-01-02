@@ -5,32 +5,33 @@ from window import Window
 import webbrowser
 
 class Help():
-  # Help window on in the 'User Info' window
+  # Help okno nacházející se v horní liště view okna
   def displayHelp(self, window):
     windowAppearance = Window()
 
-    # Opening a new window on top of our main window, setting the resolution and title
+    # Otevření nového okna, nastavení velikosti a titulu
     popUp = Toplevel(window)
     windowAppearance.centerWindow(popUp, 400, 200)
     popUp.title("Help")
 
-    # All the text labels are packed below each other
+    # Text / Label v help okně
     infoLabel = ttk.Label(popUp, text="Did you actually expect help you peasant ?", font='bold').pack(anchor=CENTER, pady=15)
     idInfoLabel = ttk.Label(popUp, text="ID is automatically generated from database").pack(anchor=CENTER, pady=10)
 
 
   def importanceOfPS(self, popUp):
+    # Funkce otevře prohlížeč a redirectne na danou stránku 
     def callback(url):
       webbrowser.open_new(url)
 
     windowAppearance = Window()
-    # Deleting everything from the pop up window because we moved to a next window
+    # Smazání ostatních oken
     for widget in popUp.winfo_children():
           widget.destroy()
-    # Setting the resolution and title
+    # Nastavení velikosti a titulu okna
     windowAppearance.centerWindow(popUp, 600, 300)
     popUp.title("Help")
-    # All the text labels are packed below each other
+    # Text k oknu o PreparedStatements
     infoLabel = ttk.Label(popUp, text="The importance of Prepared Statements: ", font='bold')
     textLabel = ttk.Label(popUp, text=
     """ 
@@ -46,5 +47,5 @@ class Help():
     textLabel.pack(anchor=CENTER)
     linkLabel.pack(anchor=CENTER)
     link.pack(anchor=CENTER)
-    
+    # Button, který nám otevře webový prohlížeč a redirectne nás na stránku o SQL injection útocích.
     link.bind("<Button-1>", lambda e:callback("https://www.hacksplaining.com/exercises/sql-injection#"))

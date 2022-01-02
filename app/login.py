@@ -44,11 +44,12 @@ class login:
                 exitButton = ttk.Button(wError, text="Okay!", width=25,command=lambda: closeWindow(login,wError))
                 exitButton.pack(anchor=CENTER)
                 invalidLabel.pack(pady=10)
-               
+        # Funkce pro získání hodnoty username z entry pole       
         def getUsername():
             username = usEntry.get()
             return username
 
+        # Funkce pro získání hodnoty password z entry pole       
         def getPassword():
             password = pswEntry.get()
             return password

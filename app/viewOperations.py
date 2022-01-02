@@ -9,7 +9,7 @@ from dbOperations import dbOp
 
 
 class viewOp:
-
+    # Funkce zobrazí pole a button pro filtrování
     def showFilter(window, tree):
         def getFilterName():
             return filterE.get()
@@ -23,7 +23,8 @@ class viewOp:
         filterSub.pack()
 
     
-
+    # Funkce která zobrazí funkce přístupné jen pro uživatele s rolí admin
+    ## Většina těchto funkcí jsou volány při zmáčknutí tlačítek
     def showAdmin(self, window, tree):
         def getfName():
             return firstNaEn.get()
@@ -38,8 +39,8 @@ class viewOp:
         def getRole():
             return roleEn.get()
             
-
-        def clearBoxes(): # Function to clear entry boxes
+        # Funkce, která vymaže všechno v input polích
+        def clearBoxes(): 
             firstNaEn.delete(0, END)
             lastNaEn.delete(0, END)
             nickEn.delete(0, END)
@@ -47,21 +48,22 @@ class viewOp:
             phoneEn.delete(0, END)
             roleEn.delete(0, END)
 
+        # Funkce, která resetuje celé okno
         def resetTree(tree):
             dbOp.clearTree(tree)
             dbOp.getAll(dbOp, tree)
             clearBoxes()
 
+        # Funkce pro přidání osob 
         def addingRecord(ID, fName, lName, nick, mail, phone, role):
             dbOp.addRecord(ID, fName, lName, nick, mail, phone, role)
             resetTree(tree)
-
+        # Funkce pro odebrání osob
         def removeRecord(tree):
             id = tree.selection()
             dbOp.removingRecord(id[0])
-
             resetTree(tree)
-
+        # Funkce pro edit osob
         def editRecord(tree):
             ID = tree.selection()
             record = dbOp.updateRecord(ID[0])
@@ -72,15 +74,16 @@ class viewOp:
             mailEn.insert(0, record[3])
             phoneEn.insert(0, record[4])
             roleEn.insert(0, record[5])
+            # dbOp.updateRecord(ID)
 
-            # dbOp.updateRecord(ID
-
+        #Frame pro popisky a input pole 
         add_frame = Frame(window)
         add_frame.pack(pady=10)
-
+        #Frame pro tlačítka
         action_frame = Frame(window)
         action_frame.pack(pady=10)
 
+        # Label a Entry pole
         firstNaL = Label(add_frame, text="First Name")
         lastNaL = Label(add_frame, text = "Last Name")
         nickL = Label(add_frame, text="Nick")
@@ -108,7 +111,8 @@ class viewOp:
         mailEn.grid(row=1, column=3)
         phoneEn.grid(row=1, column=4)
         roleEn.grid(row=1, column=5)
-
+        
+        # Funkční tlačítka
         ediBtn = Button(action_frame, text="Edit", width=10, command= lambda: editRecord(tree))
         selBtn = Button(action_frame, text="Select", width=10, command= clearBoxes())
         resBtn = Button(action_frame, text="Reset", width=10, command= lambda: resetTree(tree))

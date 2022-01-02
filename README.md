@@ -60,10 +60,10 @@ Each one of them have different tools at their disposal.
   and se to midnight. Pictures have been added for demonstration.
 
 Script contents
-=> ```bat
-=> set PGPASSWORD=postgres
-=> pg_dump -h "localhost" -U "postgres" -f "C:\Windows\Temp\library" "librarydb"
-=> ```
+ ```bat
+ set PGPASSWORD=postgres
+ pg_dump -h "localhost" -U "postgres" -f "C:\Windows\Temp\library" "librarydb"
+ ```
 
 # ------------------------------------
 6. Licenses can be found either in [Licence] or [Licenses.html]
